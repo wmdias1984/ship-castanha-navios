@@ -5,393 +5,136 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tipos de Castanha dos Navios</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      padding: 30px;
-    }
-
-    h1 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 10px;
-      font-size: 2.5em;
-    }
-
-    #subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 20px;
-      font-size: 0.9em;
-    }
-
-    .controls {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #adminBtn {
-      padding: 12px 30px;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.3s;
-    }
-
-    #adminBtn:hover {
-      background: #0056b3;
-    }
-
-    #search {
-      flex: 1;
-      min-width: 250px;
-      padding: 15px;
-      font-size: 16px;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      transition: border-color 0.3s;
-    }
-
-    #search:focus {
-      outline: none;
-      border-color: #007bff;
-    }
-
-    #adminNotice {
-      display: none;
-      background: #d4edda;
-      color: #155724;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      border-left: 4px solid #28a745;
-    }
-
-    .ships-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .ship-card {
-      background: #f8f9fa;
-      padding: 15px;
-      border-radius: 10px;
-      border-left: 4px solid #dee2e6;
-      transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer;
-    }
-
-    .ship-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .ship-name {
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 8px;
-      font-size: 1.1em;
-    }
-
-    .ship-type {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-weight: 600;
-      font-size: 0.85em;
-    }
-
-    .bol {
-      background: #dc3545;
-      color: white;
-      border-left-color: #c82333;
-    }
-
-    .ci {
-      background: #28a745;
-      color: white;
-      border-left-color: #1e7e34;
-    }
-
-    .undefined {
-      background: #6c757d;
-      color: white;
-      border-left-color: #545b62;
-    }
-
-    .edit-btn {
-      display: none;
-      background: #ffc107;
-      color: #333;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 0.8em;
-      font-weight: 600;
-    }
-
-    .edit-btn.admin-visible {
-      display: block;
-    }
-
-    .edit-btn:hover {
-      background: #e0a800;
-    }
-
-    #modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      max-width: 400px;
-      width: 90%;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    }
-
-    .modal-content h2 {
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    .modal-content input {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-
-    .modal-content button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 5px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.3s;
-    }
-
-    #loginBtn {
-      background: #007bff;
-      color: white;
-    }
-
-    #loginBtn:hover {
-      background: #0056b3;
-    }
-
-    #cancelBtn {
-      background: #6c757d;
-      color: white;
-    }
-
-    #cancelBtn:hover {
-      background: #545b62;
-    }
-
-    .no-results {
-      text-align: center;
-      padding: 40px;
-      color: #999;
-      font-size: 1.1em;
-    }
-
-    .stats {
-      text-align: center;
-      color: #666;
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 2px solid #eee;
-      font-size: 0.9em;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+    .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); padding: 30px; }
+    h1 { text-align: center; color: #333; margin-bottom: 10px; }
+    #subtitle { text-align: center; color: #666; margin-bottom: 20px; font-size: 0.9em; }
+    .controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    #search { flex: 1; padding: 15px; font-size: 16px; border: 2px solid #ddd; border-radius: 8px; }
+    #adminBtn { padding: 12px 20px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; }
+    #adminNotice { display: none; background: #d4edda; color: #155724; padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #28a745; }
+    .ships-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+    .ship-card { background: #f8f9fa; padding: 15px; border-radius: 10px; border-left: 4px solid #dee2e6; display: flex; justify-content: space-between; align-items: center; }
+    .badge { padding: 4px 10px; border-radius: 12px; font-size: 0.8em; font-weight: bold; color: white; }
+    .bol { background: #dc3545; }
+    .ci { background: #28a745; }
+    .undefined { background: #6c757d; }
+    #modal, #editModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+    .modal-content { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; }
+    .modal-content input, .modal-content select { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #ddd; border-radius: 8px; }
+    .modal-content button { width: 100%; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 5px; }
+    .btn-primary { background: #007bff; color: white; }
+    .btn-secondary { background: #6c757d; color: white; }
+    .edit-btn { background: none; border: none; cursor: pointer; font-size: 1.2em; display: none; }
+    .admin-active .edit-btn { display: inline; }
   </style>
 </head>
-<body>
+<body class="">
   <div class="container">
-    <h1>⚠️ Tipos de Castanha dos Navios</h1>
-    <div id="subtitle">Consulta rápida - BOL (bolinha vermelha), C.I (castanha inteligente), UNDEFINED (desconhecido)</div>
-    
+    <h1>Tipos de Castanha dos Navios</h1>
+    <p id="subtitle">Consulta rápida de castanhas</p>
+    <div id="adminNotice">Modo Admin Ativado</div>
     <div class="controls">
-      <button id="adminBtn">🔐 Modo Admin</button>
-      <input type="text" id="search" placeholder="Pesquisar navio..." aria-label="pesquisar navio">
+      <input type="text" id="search" placeholder="Pesquisar navio...">
+      <button id="adminBtn">Admin</button>
     </div>
-
-    <div id="adminNotice">✓ Admin ativo - você pode editar</div>
-
     <div id="results" class="ships-grid"></div>
-    <div class="stats">
-      <span id="count">Total: 0 navios</span>
-    </div>
   </div>
 
   <div id="modal">
     <div class="modal-content">
       <h2>Senha Admin</h2>
-      <input type="password" id="passwordInput" placeholder="Digite a senha" autofocus>
-      <button id="loginBtn">Entrar</button>
-      <button id="cancelBtn">Cancelar</button>
+      <input type="password" id="pass" placeholder="Senha">
+      <button class="btn-primary" onclick="login()">Entrar</button>
+      <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
     </div>
   </div>
 
-  <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1001; justify-content: center; align-items: center;">
+  <div id="editModal">
     <div class="modal-content">
-      <h2>Editar Tipo de Castanha</h2>
-      <div id="editShipName" style="margin-bottom: 15px; font-weight: 600; color: #333;"></div>
-      <select id="typeSelect" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
-        <option value="BOL">BOL (Bolinha Vermelha)</option>
-        <option value="C.I">C.I (Castanha Inteligente)</option>
-        <option value="UNDEFINED">UNDEFINED (Desconhecido)</option>
+      <h2 id="editName"></h2>
+      <select id="editType">
+        <option value="BOL">BOL</option>
+        <option value="C.I">C.I</option>
+        <option value="UNDEFINED">UNDEFINED</option>
       </select>
-      <button id="saveEditBtn" style="width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Salvar</button>
-      <button id="closeEditBtn" style="width: 100%; padding: 12px; margin-top: 5px; background: #6c757d; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Cancelar</button>
+      <button class="btn-primary" onclick="saveEdit()">Salvar</button>
+      <button class="btn-secondary" onclick="closeEdit()">Cancelar</button>
     </div>
   </div>
 
   <script>
-    const ADMIN_PASSWORD = '1234';
     let isAdmin = false;
-    let allShips = [{name:'CGM Corneille',type:'BOL'},{name:'CGM Magdalena',type:'C.I'},{name:'CGM Maupassant',type:'BOL'},{name:'Mercosul itajai',type:'BOL'},{name:'APL Florida',type:'BOL'},{name:'APL Oregon',type:'BOL'},{name:'APL Yanashan',type:'BOL'},{name:'AS Carolina',type:'BOL'},{name:'AS Pauline',type:'C.I'},{name:'Agios Dimitrios',type:'BOL'},{name:'Aisopos',type:'BOL'},{name:'Al Safat',type:'BOL'},{name:'Aldebaran/Atacama',type:'C.I'},{name:'Alessia',type:'BOL'},{name:'Algol',type:'BOL'},{name:'Aliança Corrientes',type:'C.I'},{name:'Aliança San Martin',type:'C.I'},{name:'Aliança Santa Fé',type:'C.I'},{name:'Aliança Santos',type:'BOL'},{name:'Aliança leblon',type:'BOL'},{name:'Aliança manaus',type:'C.I'},{name:'Als venus',type:'BOL'},{name:'Als vesta',type:'BOL'},{name:'Amsterdam express',type:'BOL'},{name:'Américo Vespúcio',type:'C.I'},{name:'Annie B',type:'BOL'},{name:'Anthea V',type:'BOL'},{name:'Antibes Express',type:'BOL'},{name:'Antofagasta Express',type:'C.I'},{name:'Antofagata express',type:'C.I'},{name:'Apl drangon',type:'BOL'},{name:'Apl new Jersey',type:'BOL'},{name:'Apl yangshan',type:'BOL'},{name:'Arica Express',type:'C.I'},{name:'Arsos',type:'BOL'},{name:'Artemis',type:'BOL'},{name:'As Carolina',type:'BOL'},{name:'As Fillipa',type:'BOL'},{name:'As Pauline',type:'C.I'},{name:'As caspria',type:'BOL'},{name:'As sabine',type:'BOL'},{name:'As samanta',type:'BOL'},{name:'As silje',type:'BOL'},{name:'BF amburg',type:'BOL'},{name:'BUX FAVOURITE',type:'BOL'},{name:'Barbara',type:'BOL'},{name:'Barry',type:'C.I'},{name:'Bartolomeu Dias',type:'C.I'},{name:'Bea Schuti',type:'BOL'},{name:'Beme beffe',type:'BOL'},{name:'Blackpool Tower',type:'BOL'},{name:'Bosa',type:'C.I'},{name:'Breme belle',type:'BOL'},{name:'Bremen',type:'BOL'},{name:'Bright',type:'BOL'},{name:'Brooklyn Bridge',type:'C.I'},{name:'Buxfavourite',type:'BOL'},{name:'C Hamburg',type:'BOL'},{name:'CGM Arkansas',type:'C.I'},{name:'CGM Bahia',type:'C.I'},{name:'CGM Buzios',type:'C.I'},{name:'CGM CMA LA SCALA',type:'BOL'},{name:'CGM La Traviata',type:'BOL'},{name:'CGM Paraty',type:'C.I'},{name:'CGM Yukon',type:'C.I'},{name:'CGM amazon',type:'C.I'},{name:'CGM aristote',type:'BOL'},{name:'CGM belém',type:'C.I'},{name:'CGM berlioz',type:'BOL'},{name:'CGM buzios',type:'C.I'},{name:'CGM byblos',type:'C.I'},{name:'CGM columbia',type:'C.I'},{name:'CGM fiordland',type:'C.I'},{name:'CGM fort james',type:'C.I'},{name:'CGM fort st louis',type:'BOL'},{name:'CGM front St georges',type:'BOL'},{name:'CGM guarani',type:'BOL'},{name:'CGM la scala',type:'BOL'},{name:'CGM la traviata',type:'BOL'},{name:'CGM lisa marie',type:'C.I'},{name:'CGM litani',type:'C.I'},{name:'CGM lome',type:'BOL'},{name:'CGM mercantour',type:'C.I'},{name:'CGM missouri',type:'C.I'},{name:'CGM nansha',type:'C.I'},{name:'CGM nerval',type:'BOL'},{name:'CGM niagara',type:'C.I'},{name:'CGM petra',type:'C.I'},{name:'CGM platon',type:'BOL'},{name:'CGM rabelais',type:'BOL'},{name:'CGM rhone',type:'C.I'},{name:'CGM rio grande',type:'C.I'},{name:'CGM sainte anne',type:'C.I'},{name:'CGM santos',type:'C.I'},{name:'CGM são Paulo',type:'C.I'},{name:'CGM tanya',type:'C.I'},{name:'CGM ural',type:'C.I'},{name:'CGM vela',type:'BOL'},{name:'CGM vera cruz',type:'BOL'},{name:'CGM zingaro',type:'C.I'},{name:'COSCO Korea',type:'BOL'},{name:'COSCO New York',type:'BOL'},{name:'COSCO Shipping Armany',type:'C.I'},{name:'COSCO Shipping Honor',type:'BOL'},{name:'COSCO Thailand',type:'BOL'},{name:'CS Setubal',type:'BOL'},{name:'Calandra',type:'C.I'},{name:'Candido Randon',type:'C.I'},{name:'Cap San Antonio',type:'C.I'},{name:'Cap San Artemissio',type:'C.I'},{name:'Cap San Felipe',type:'C.I'},{name:'Cap San Lorenzo',type:'C.I'},{name:'Cap San Nicolas',type:'C.I'},{name:'Cap San Raphael',type:'C.I'},{name:'Cap San Sonio',type:'C.I'},{name:'Cap San maleas',type:'C.I'},{name:'Cap pionner',type:'BOL'},{name:'Cap scott',type:'C.I'},{name:'Cap sorel',type:'C.I'},{name:'Cap sounio',type:'C.I'},{name:'Cap spencer',type:'C.I'},{name:'Cap tainaro',type:'BOL'},{name:'Cardiff',type:'BOL'},{name:'Carlota Star',type:'BOL'},{name:'Carolina Star',type:'BOL'},{name:'Casa traiguem',type:'BOL'},{name:'Catherine c',type:'C.I'},{name:'Celina Star',type:'BOL'},{name:'Cgm mississippi',type:'C.I'},{name:'Chloe d',type:'BOL'},{name:'Christmas Island',type:'BOL'},{name:'Cimbria',type:'BOL'},{name:'Circular Quay',type:'C.I'},{name:'City of Alexandria',type:'BOL'},{name:'Cma cgm paraty',type:'C.I'},{name:'Cnc lion',type:'BOL'},{name:'Constantia',type:'BOL'},{name:'ContShip OAK',type:'BOL'},{name:'Conti Paris',type:'BOL'},{name:'Continuação makalu',type:'BOL'},{name:'Copiapo',type:'C.I'},{name:'Corcovado',type:'C.I'},{name:'Cosco boston',type:'BOL'},{name:'Cosco china volga',type:'C.I'},{name:'Cosco new york',type:'BOL'},{name:'Cosco prince rupert',type:'BOL'},{name:'Cosco shipping Argentina',type:'C.I'},{name:'Cosco shipping Brasil',type:'C.I'},{name:'Cosco shipping chile',type:'C.I'},{name:'Cosco shipping danube',type:'C.I'},{name:'Cosco shipping harmony',type:'BOL'},{name:'Cosco shipping honor',type:'BOL'},{name:'Cosco shipping peru',type:'C.I'},{name:'Cosco shipping rhine',type:'C.I'},{name:'Cosco shipping tian xiang he',type:'BOL'},{name:'Cosco shipping uruguai',type:'C.I'},{name:'Cosco são paulo',type:'BOL'},{name:'Cota puri',type:'C.I'},{name:'Counti Paris',type:'BOL'},{name:'Csay traiguen',type:'BOL'},{name:'Dallas express',type:'BOL'},{name:'Delphinus c',type:'BOL'},{name:'Demeter',type:'BOL'},{name:'Devotion',type:'BOL'},{name:'Diego Garcia',type:'C.I'},{name:'Dublin express',type:'BOL'},{name:'Dusseldorf express',type:'BOL'},{name:'ER Berlin',type:'BOL'},{name:'ER Tianan',type:'C.I'},{name:'EVER Steady',type:'UNDEFINED'},{name:'EVER Unific',type:'BOL'},{name:'Ensenada (material próprio)',type:'C.I'},{name:'Esl nhava sheva',type:'BOL'},{name:'Ester Island',type:'BOL'},{name:'Europe',type:'BOL'},{name:'Ever elite',type:'BOL'},{name:'Ever fame',type:'C.I'},{name:'Ever fast',type:'C.I'},{name:'Ever feat',type:'C.I'},{name:'Ever fine',type:'C.I'},{name:'Ever fit',type:'C.I'},{name:'Ever future',type:'C.I'},{name:'Ever laden',type:'C.I'},{name:'Ever liberal',type:'C.I'},{name:'Ever linkg',type:'C.I'},{name:'Ever steady',type:'BOL'},{name:'Ever unific',type:'BOL'},{name:'Ever urban',type:'BOL'},{name:'Express black sea',type:'BOL'},{name:'Fernão Dias',type:'C.I'},{name:'Fernão de Magalhães',type:'C.I'},{name:'Fort desaix',type:'C.I'},{name:'GH Leste',type:'BOL'},{name:'Galloway',type:'BOL'},{name:'Gemlik express',type:'BOL'},{name:'Gerard Schuit',type:'C.I'},{name:'Gh leste',type:'BOL'},{name:'Glasgow express',type:'BOL'},{name:'Gls rossi',type:'BOL'},{name:'Grato shang',type:'C.I'},{name:'Great shang',type:'C.I'},{name:'Great woods',type:'BOL'},{name:'Grenville',type:'C.I'},{name:'Gsl elefftheria',type:'C.I'},{name:'Gsl melina',type:'C.I'},{name:'Gsl rossi',type:'BOL'},{name:'HANSE Europe',type:'C.I'},{name:'Hanjin Seatle',type:'BOL'},{name:'Hans schulte',type:'C.I'},{name:'Haris',type:'BOL'},{name:'Harmonia Marsilia',type:'BOL'},{name:'Harmoniahusum',type:'BOL'},{name:'Harrier Hunter',type:'BOL'},{name:'Hedda Schuit',type:'BOL'},{name:'Hello',type:'BOL'},{name:'Heng hui 6',type:'BOL'},{name:'Henry Hudson',type:'BOL'},{name:'Hmm clover',type:'C.I'},{name:'Hmm privilege',type:'BOL'},{name:'Hs Carolina',type:'BOL'},{name:'Hugary',type:'BOL'},{name:'Hungary',type:'BOL'},{name:'ITAL Lunare',type:'BOL'},{name:'Irenes resolve',type:'C.I'},{name:'Irenes rule',type:'C.I'},{name:'Irenes wisdom',type:'C.I'},{name:'Ital unica',type:'BOL'},{name:'JPO Leo',type:'BOL'},{name:'JPO Scorpion',type:'BOL'},{name:'Jogela',type:'BOL'},{name:'KOTA Banteng',type:'BOL'},{name:'KOTA Cabum',type:'C.I'},{name:'KOTA Cempaka',type:'C.I'},{name:'KOTA Ganaling',type:'C.I'},{name:'KOTA Gembira',type:'BOL'},{name:'KOTA Gunawan',type:'BOL'},{name:'KOTA Lagu',type:'BOL'},{name:'KOTA Lahir',type:'BOL'},{name:'KOTA Langsar',type:'C.I'},{name:'KOTA Laris',type:'C.I'},{name:'KOTA Lawa',type:'C.I'},{name:'KOTA Layar',type:'C.I'},{name:'KOTA Lazim',type:'C.I'},{name:'KOTA Legit',type:'C.I'},{name:'KOTA Lekas',type:'C.I'},{name:'KOTA Lembah',type:'C.I'},{name:'KOTA Lestari',type:'C.I'},{name:'KOTA Lukis',type:'C.I'},{name:'KOTA Lumaian',type:'C.I'},{name:'KOTA Machan',type:'C.I'},{name:'KOTA Manais',type:'BOL'},{name:'KOTA Megah',type:'C.I'},{name:'KOTA Pusaka',type:'C.I'},{name:'Kota cabar',type:'C.I'},{name:'Kota cantik',type:'C.I'},{name:'Kota carum',type:'C.I'},{name:'Kota cempaka',type:'C.I'},{name:'Kota cepat',type:'C.I'},{name:'Kota ebony',type:'C.I'},{name:'Kota embun',type:'C.I'},{name:'Kota gadang',type:'C.I'},{name:'Kota karim',type:'BOL'},{name:'Kota lavana',type:'C.I'},{name:'Kota layang',type:'C.I'},{name:'Kota lekas',type:'C.I'},{name:'Kota lestari',type:'C.I'},{name:'Kota lima',type:'BOL'},{name:'Kota lumba',type:'C.I'},{name:'Kota megah',type:'C.I'},{name:'Kota pahlawan',type:'C.I'},{name:'Kota pelangi',type:'C.I'},{name:'Kota puri',type:'C.I'},{name:'Kota pusaka',type:'C.I'},{name:'Kota santos',type:'BOL'},{name:'Kure',type:'BOL'},{name:'LOG IN Discovery',type:'BOL'},{name:'LOG IN Endurance',type:'BOL'},{name:'LOG IN Jacaranda',type:'C.I'},{name:'LOG IN Pantanal',type:'BOL'},{name:'LOG IN Resiliente',type:'BOL'},{name:'LONDON Trader',type:'BOL'},{name:'Lilly Schut',type:'BOL'},{name:'Lodur',type:'BOL'},{name:'Log in Beach express',type:'BOL'},{name:'Log in Discovery',type:'BOL'},{name:'Log in endurance',type:'BOL'},{name:'Log in evolution',type:'C.I'},{name:'Log in experience',type:'C.I'},{name:'Log in jacaranda',type:'C.I'},{name:'Log in jatoba',type:'C.I'},{name:'Log in pantanal',type:'BOL'},{name:'Log in polaris',type:'C.I'},{name:'Log in resiliente',type:'BOL'},{name:'Loncomilla',type:'BOL'},{name:'London trader',type:'BOL'},{name:'Long beach express',type:'BOL'},{name:'Lori',type:'BOL'},{name:'Louis',type:'BOL'},{name:'Lovis S',type:'BOL'},{name:'Lutetia',type:'BOL'},{name:'MAERSK Bermuda',type:'BOL'},{name:'MAERSK La Paz',type:'BOL'},{name:'MAERSK Laguna',type:'BOL'},{name:'MAERSK Leon',type:'BOL'},{name:'MAERSK Leticia',type:'BOL'},{name:'MAERSK Londrina',type:'BOL'},{name:'MAERSK Menphis',type:'BOL'},{name:'MAERSK Shams',type:'BOL'},{name:'MAERSK Shivling',type:'BOL'},{name:'MERCOSUL Guarani',type:'BOL'},{name:'MERCOSUL Manaus',type:'BOL'},{name:'MINERVA',type:'C.I'},{name:'MOL Paramount',type:'BOL'},{name:'MONGOOSE Hunter',type:'C.I'},{name:'MONTE Aconcagua',type:'C.I'},{name:'MONTE Azul',type:'C.I'},{name:'MONTE Cervantes',type:'C.I'},{name:'MONTE Olivia',type:'C.I'},{name:'MONTE Pascoal',type:'C.I'},{name:'MONTE Rosa',type:'C.I'},{name:'MONTE Sarmiento',type:'C.I'},{name:'MONTE Tamaro',type:'C.I'},{name:'MONTE VIDEO EXPRESS',type:'C.I'},{name:'MONTE Verde',type:'C.I'},{name:'MSC Jasmine x',type:'BOL'},{name:'MSC Adonis',type:'C.I'},{name:'MSC Africa',type:'UNDEFINED'},{name:'MSC Agadir',type:'BOL'},{name:'MSC Agrigento',type:'BOL'},{name:'MSC Albany',type:'BOL'},{name:'MSC Amalfi',type:'BOL'},{name:'MSC Arica',type:'BOL'},{name:'MSC Athens',type:'BOL'},{name:'MSC Athos',type:'BOL'},{name:'MSC Bianca',type:'BOL'},{name:'MSC Branka',type:'BOL'},{name:'MSC Carlotta',type:'BOL'},{name:'MSC Carole',type:'BOL'},{name:'MSC Channe',type:'BOL'},{name:'MSC Clea',type:'BOL'},{name:'MSC Dakar x',type:'BOL'},{name:'MSC Damla',type:'BOL'},{name:'MSC Denisse x',type:'BOL'},{name:'MSC Domitille',type:'BOL'},{name:'MSC Dubai',type:'BOL'},{name:'MSC Gayane',type:'BOL'},{name:'MSC Ghana',type:'BOL'},{name:'MSC Giselle',type:'BOL'},{name:'MSC INSA',type:'BOL'},{name:'MSC Ilenia',type:'BOL'},{name:'MSC Ilona',type:'BOL'},{name:'MSC Kalamata VII',type:'BOL'},{name:'MSC Lagos x',type:'BOL'},{name:'MSC Le Havre',type:'BOL'},{name:'MSC Leila',type:'BOL'},{name:'MSC Loretta',type:'BOL'},{name:'MSC Margarita',type:'BOL'},{name:'MSC Marítima v',type:'BOL'},{name:'MSC Nairobe',type:'BOL'},{name:'MSC Orion',type:'BOL'},{name:'MSC Pegasus VII',type:'BOL'},{name:'MSC Quingdao',type:'BOL'},{name:'MSC Ronit',type:'BOL'},{name:'MSC Sara Elena',type:'BOL'},{name:'MSC Shay',type:'BOL'},{name:'MSC Shreya',type:'BOL'},{name:'MSC Silvia',type:'BOL'},{name:'MSC Siya b',type:'C.I'},{name:'MSC Spain',type:'BOL'},{name:'MSC Togo',type:'BOL'},{name:'MSC Vilda x',type:'BOL'},{name:'MSC anzu',type:'BOL'},{name:'MSC bianca',type:'BOL'},{name:'MSC eliana',type:'BOL'},{name:'MSC firenze',type:'BOL'},{name:'MSC gabriella',type:'BOL'},{name:'MSC hortense',type:'BOL'},{name:'MSC lily',type:'BOL'},{name:'MSC los angeles',type:'BOL'},{name:'MSC meline',type:'BOL'},{name:'MSC michela',type:'BOL'},{name:'MSC muge',type:'BOL'},{name:'MSC pina',type:'BOL'},{name:'MSC yashi b',type:'BOL'},{name:'Madrid trader',type:'BOL'},{name:'Maersk Acadia',type:'C.I'},{name:'Maersk Everglades',type:'C.I'},{name:'Maersk Fortaleza',type:'C.I'},{name:'Maersk Freeport',type:'C.I'},{name:'Maersk Londrina',type:'BOL'},{name:'Maersk Rubicon',type:'BOL'},{name:'Maersk Wellington',type:'C.I'},{name:'Maersk amazon',type:'BOL'},{name:'Maersk avon',type:'BOL'},{name:'Maersk bentonville',type:'BOL'},{name:'Maersk bermuda',type:'BOL'},{name:'Maersk biscayne',type:'C.I'},{name:'Maersk el palomar',type:'BOL'},{name:'Maersk ganges',type:'BOL'},{name:'Maersk inoshima',type:'BOL'},{name:'Maersk jalan',type:'BOL'},{name:'Maersk karachi',type:'BOL'},{name:'Maersk la paz',type:'BOL'},{name:'Maersk laberinto',type:'BOL'},{name:'Maersk labrea',type:'BOL'},{name:'Maersk laguna',type:'BOL'},{name:'Maersk lamanai',type:'BOL'},{name:'Maersk lanco',type:'BOL'},{name:'Maersk lavras',type:'BOL'},{name:'Maersk lebu',type:'BOL'},{name:'Maersk leon',type:'BOL'},{name:'Maersk leticia',type:'BOL'},{name:'Maersk lima',type:'BOL'},{name:'Maersk lins',type:'BOL'},{name:'Maersk lirquen',type:'BOL'},{name:'Maersk lota',type:'BOL'},{name:'Maersk luz',type:'BOL'},{name:'Maersk marajo',type:'BOL'},{name:'Maersk memphis',type:'BOL'},{name:'Maersk monte linzor',type:'C.I'},{name:'Maersk newark',type:'BOL'},{name:'Maersk palomar',type:'BOL'},{name:'Maersk polar',type:'BOL'},{name:'Maersk redwood',type:'C.I'},{name:'Maersk sana',type:'BOL'},{name:'Maersk santana',type:'BOL'},{name:'Maersk taipur',type:'BOL'},{name:'Maipo',type:'BOL'},{name:'Maliakos',type:'C.I'},{name:'Mapocho',type:'BOL'},{name:'Maria h',type:'BOL'},{name:'Maya bay',type:'BOL'},{name:'Mediterranean express',type:'BOL'},{name:'Mehuin',type:'BOL'},{name:'Melbourne bridege',type:'BOL'},{name:'Mercosul Guarujá',type:'BOL'},{name:'Mercosul Santos',type:'BOL'},{name:'Mercosul fortaleza',type:'BOL'},{name:'Mercosul guarani',type:'BOL'},{name:'Mercosul suape',type:'BOL'},{name:'Meridian',type:'C.I'},{name:'Mirador express',type:'BOL'},{name:'Mizar',type:'BOL'},{name:'Mona lisa',type:'BOL'},{name:'Monte Alegre',type:'C.I'},{name:'Monte Verde',type:'C.I'},{name:'Monte azul',type:'C.I'},{name:'Monte cervantes',type:'C.I'},{name:'Monte olivia',type:'C.I'},{name:'Monte sarmiento',type:'C.I'},{name:'Monte tamaro',type:'C.I'},{name:'Montevideo express',type:'C.I'},{name:'Msc Pegasus VII',type:'BOL'},{name:'Myd tianjin',type:'BOL'},{name:'NAVIOS Spring',type:'BOL'},{name:'NILEDUTCH Antwerpen',type:'C.I'},{name:'NILEDUTCH Breda',type:'C.I'},{name:'NILEDUTCH Luanda',type:'BOL'},{name:'NORDIC Beijing',type:'C.I'},{name:'NORDIC Hong Kong',type:'C.I'},{name:'NORDIC Macal',type:'BOL'},{name:'NORDIC Pacific',type:'BOL'},{name:'NORDIC Straglund',type:'BOL'},{name:'NORTHERN Delegation',type:'BOL'},{name:'NORTHERN Guard',type:'BOL'},{name:'NORTHERN Magnetic',type:'BOL'},{name:'NORTHERN Magnitude',type:'BOL'},{name:'NORTHERN Magnum',type:'BOL'},{name:'NYK Diana',type:'C.I'},{name:'Nairobix',type:'BOL'},{name:'Natal',type:'BOL'},{name:'Navarino',type:'BOL'},{name:'Navios domino',type:'BOL'},{name:'Navios maguinolia',type:'C.I'},{name:'Navios springs',type:'BOL'},{name:'Navios vermilion',type:'BOL'},{name:'Nc bravo',type:'C.I'},{name:'Nc breda',type:'C.I'},{name:'Nc brisa',type:'C.I'},{name:'Nordamélia',type:'BOL'},{name:'Northern democrat',type:'BOL'},{name:'Northern jubilee',type:'BOL'},{name:'Northern magnitude',type:'BOL'},{name:'Northern magnun',type:'BOL'},{name:'Northern majestic',type:'BOL'},{name:'Northern priority',type:'BOL'},{name:'Nyk demeter',type:'BOL'},{name:'Nyk diana',type:'C.I'},{name:'Nz Changai',type:'BOL'},{name:'One amazon',type:'C.I'},{name:'One panama',type:'C.I'},{name:'PARADISE Star',type:'BOL'},{name:'POLAR Argentina',type:'BOL'},{name:'POLAR Costa Rica',type:'C.I'},{name:'Palena',type:'C.I'},{name:'Pandora',type:'BOL'},{name:'Paradise star',type:'BOL'},{name:'Paranagua express',type:'C.I'},{name:'Paul Russ',type:'BOL'},{name:'Pedro Alvares Cabral',type:'C.I'},{name:'Polar argentina',type:'BOL'},{name:'Polar chile',type:'BOL'},{name:'Polonia',type:'BOL'},{name:'President lb Johnson',type:'C.I'},{name:'Prestige',type:'BOL'},{name:'Progress c',type:'BOL'},{name:'RIO Barrow',type:'BOL'},{name:'RIO Centaurus',type:'BOL'},{name:'Rdo fortune',type:'BOL'},{name:'Robin 4',type:'BOL'},{name:'SAFA Marine',type:'BOL'},{name:'SAFADI',type:'BOL'},{name:'SAFMARINE Mafadi',type:'BOL'},{name:'SEA LAND Michigan',type:'BOL'},{name:'SEAMAX Rowaytion',type:'C.I'},{name:'SEAMAX Stanford',type:'BOL'},{name:'SEASPAN Dubai',type:'BOL'},{name:'SEASPAN Raptor',type:'C.I'},{name:'SM Hong Kong',type:'BOL'},{name:'Saga faith',type:'C.I'},{name:'Salvador express',type:'C.I'},{name:'San Alberto',type:'C.I'},{name:'San Alvaro',type:'C.I'},{name:'San Amerigo',type:'C.I'},{name:'San Antonio EXPRESS',type:'C.I'},{name:'San Felipe',type:'BOL'},{name:'San Fernando',type:'BOL'},{name:'San Fracisco',type:'BOL'},{name:'San Francisca',type:'BOL'},{name:'San Nicolas maersk',type:'C.I'},{name:'San Raphael maersk',type:'C.I'},{name:'San Vicente',type:'C.I'},{name:'San Vicente Express',type:'C.I'},{name:'San alberto',type:'C.I'},{name:'San antonio express',type:'C.I'},{name:'San felipe',type:'BOL'},{name:'San francisca',type:'BOL'},{name:'San marcos maersk',type:'C.I'},{name:'San nicolas maersk',type:'C.I'},{name:'Santa Linea',type:'C.I'},{name:'Santa barbara',type:'C.I'},{name:'Santa inês',type:'C.I'},{name:'Santos EXPRESS',type:'BOL'},{name:'Sealand michigan',type:'BOL'},{name:'Seamax empire',type:'BOL'},{name:'Seamax rowayton',type:'C.I'},{name:'Seamax stamford',type:'BOL'},{name:'Seaspan empire',type:'BOL'},{name:'Seaspan fuzhou',type:'BOL'},{name:'Seaspan hamburg',type:'BOL'},{name:'Seaspan hnnover',type:'BOL'},{name:'Seaspan osprey',type:'C.I'},{name:'Seaspan raptor',type:'C.I'},{name:'Seaspan santos',type:'BOL'},{name:'Seatlle c',type:'BOL'},{name:'Sebastião Caboto',type:'C.I'},{name:'Skyros',type:'BOL'},{name:'Solar N',type:'BOL'},{name:'Skyros',type:'BOL'},{name:'Spirit of Hong kong',type:'BOL'},{name:'Spirit of Sydney',type:'C.I'},{name:'Spyros V',type:'BOL'},{name:'Stralsund',type:'BOL'},{name:'Suape express',type:'BOL'},{name:'Sunny phoenix',type:'BOL'},{name:'Swansea',type:'BOL'},{name:'TRF Partici',type:'BOL'},{name:'Tabea',type:'BOL'},{name:'Taipei trade',type:'BOL'},{name:'Tampanos',type:'BOL'},{name:'Tasman',type:'BOL'},{name:'Teno',type:'BOL'},{name:'Tian jian',type:'C.I'},{name:'Tican fu',type:'C.I'},{name:'Tirua',type:'BOL'},{name:'Tirva',type:'BOL'},{name:'Tokyo bay',type:'BOL'},{name:'Torrente',type:'BOL'},{name:'Tower',type:'BOL'},{name:'Trf partici',type:'BOL'},{name:'Tucapel',type:'BOL'},{name:'Tusul',type:'BOL'},{name:'UASC Zamzam',type:'C.I'},{name:'Uasc al khor',type:'BOL'},{name:'Uasc zamzam',type:'C.I'},{name:'Ute',type:'BOL'},{name:'Valence',type:'BOL'},{name:'Valiant',type:'BOL'},{name:'Valor',type:'BOL'},{name:'Value',type:'BOL'},{name:'Vanetiko',type:'BOL'},{name:'Vantage',type:'BOL'},{name:'Varamo',type:'BOL'},{name:'Velika',type:'BOL'},{name:'Venetiko',type:'BOL'},{name:'Venezia',type:'BOL'},{name:'Vicente Pizon',type:'C.I'},{name:'Virgo',type:'C.I'},{name:'W kyrenia',type:'BOL'},{name:'Wangarata',type:'BOL'},{name:'Wieland',type:'BOL'},{name:'XIN Chi Wan',type:'UNDEFINED'},{name:'XIN Su Zhou',type:'BOL'},{name:'XIN Wu Han',type:'BOL'},{name:'Xin chang sha',type:'BOL'},{name:'Xin chi wan',type:'BOL'},{name:'Xin chong qing',type:'BOL'},{name:'Xin fu zhou',type:'BOL'},{name:'Xin su zhou',type:'BOL'},{name:'Xin wei hai',type:'BOL'},{name:'Yigitcan',type:'BOL'},{name:'Ym capacity',type:'C.I'},{name:'Ym centennial',type:'C.I'},{name:'Ym continent',type:'C.I'},{name:'ZIM Chicago',type:'BOL'},{name:'ZIM Los Angeles',type:'BOL'},{name:'ZIM San Diego',type:'BOL'},{name:'Zhong Yan hai Yun jin qe',type:'C.I'},{name:'Zim Thailand',type:'C.I'},{name:'Zim baltimore',type:'BOL'},{name:'Zim nofolk',type:'BOL'},{name:'Zim usa',type:'C.I'},{name:'Zim xiamen',type:'BOL'},{name:'irenes resolve',type:'C.I'},{name:'irenes rule',type:'C.I'},{name:'irenes wisdom',type:'C.I'},{name:'joão de Solis',type:'BOL'},{name:'nc bruma',type:'C.I'},{name:'rdo Fortune',type:'BOL'},{name:'san amerigo',type:'C.I'}];
+    let ships = [
+{name:'CGM Corneille',type:'BOL'},{name:'CGM Magdalena',type:'C.I'},{name:'CGM Maupassant',type:'BOL'},{name:'Mercosul itajai',type:'BOL'},{name:'APL Florida',type:'BOL'},{name:'APL Oregon',type:'BOL'},{name:'APL Yanashan',type:'BOL'},{name:'AS Carolina',type:'BOL'},{name:'AS Pauline',type:'C.I'},{name:'Agios Dimitrios',type:'BOL'},{name:'Aisopos',type:'BOL'},{name:'Al Safat',type:'BOL'},{name:'Aldebaran/Atacama',type:'C.I'},{name:'Alessia',type:'BOL'},{name:'Algol',type:'BOL'},{name:'Aliança Corrientes',type:'C.I'},{name:'Aliança San Martin',type:'C.I'},{name:'Aliança Santa Fé',type:'C.I'},{name:'Aliança Santos',type:'BOL'},{name:'Aliança leblon',type:'BOL'},{name:'Aliança manaus',type:'C.I'},{name:'Als venus',type:'BOL'},{name:'Als vesta',type:'BOL'},{name:'Amsterdam express',type:'BOL'},{name:'Américo Vespúcio',type:'C.I'},{name:'Annie B',type:'BOL'},{name:'Anthea V',type:'BOL'},{name:'Antibes Express',type:'BOL'},{name:'Antofagasta Express',type:'C.I'},{name:'Antofagata express',type:'C.I'},{name:'Apl drangon',type:'BOL'},{name:'Apl new Jersey',type:'BOL'},{name:'Apl yangshan',type:'BOL'},{name:'Arica Express',type:'C.I'},{name:'Arsos',type:'BOL'},{name:'Artemis',type:'BOL'},{name:'As Carolina',type:'BOL'},{name:'As Fillipa',type:'BOL'},{name:'As Pauline',type:'C.I'},{name:'As caspria',type:'BOL'},{name:'As sabine',type:'BOL'},{name:'As samanta',type:'BOL'},{name:'As silje',type:'BOL'},{name:'BF amburg',type:'BOL'},{name:'BUX FAVOURITE',type:'BOL'},{name:'Barbara',type:'BOL'},{name:'Barry',type:'C.I'},{name:'Bartolomeu Dias',type:'C.I'},{name:'Bea Schuti',type:'BOL'},{name:'Beme beffe',type:'BOL'},{name:'Blackpool Tower',type:'BOL'},{name:'Bosa',type:'C.I'},{name:'Breme belle',type:'BOL'},{name:'Bremen',type:'BOL'},{name:'Bright',type:'BOL'},{name:'Brooklyn Bridge',type:'C.I'},{name:'Buxfavourite',type:'BOL'},{name:'C Hamburg',type:'BOL'},{name:'CGM Arkansas',type:'C.I'},{name:'CGM Bahia',type:'C.I'},{name:'CGM Buzios',type:'C.I'},{name:'CGM CMA LA SCALA',type:'BOL'},{name:'CGM La Traviata',type:'BOL'},{name:'CGM Paraty',type:'C.I'},{name:'CGM Yukon',type:'C.I'},{name:'CGM amazon',type:'C.I'},{name:'CGM aristote',type:'BOL'},{name:'CGM belém',type:'C.I'},{name:'CGM berlioz',type:'BOL'},{name:'CGM buzios',type:'C.I'},{name:'CGM byblos',type:'C.I'},{name:'CGM columbia',type:'C.I'},{name:'CGM fiordland',type:'C.I'},{name:'CGM fort james',type:'C.I'},{name:'CGM fort st louis',type:'BOL'},{name:'CGM front St georges',type:'BOL'},{name:'CGM guarani',type:'BOL'},{name:'CGM la scala',type:'BOL'},{name:'CGM la traviata',type:'BOL'},{name:'CGM lisa marie',type:'C.I'},{name:'CGM litani',type:'C.I'},{name:'CGM lome',type:'BOL'},{name:'CGM mercantour',type:'C.I'},{name:'CGM missouri',type:'C.I'},{name:'CGM nansha',type:'C.I'},{name:'CGM nerval',type:'BOL'},{name:'CGM niagara',type:'C.I'},{name:'CGM petra',type:'C.I'},{name:'CGM platon',type:'BOL'},{name:'CGM rabelais',type:'BOL'},{name:'CGM rhone',type:'C.I'},{name:'CGM rio grande',type:'C.I'},{name:'CGM sainte anne',type:'C.I'},{name:'CGM santos',type:'C.I'},{name:'CGM são Paulo',type:'C.I'},{name:'CGM tanya',type:'C.I'},{name:'CGM ural',type:'C.I'},{name:'CGM vela',type:'BOL'},{name:'CGM vera cruz',type:'BOL'},{name:'CGM zingaro',type:'C.I'},{name:'COSCO Korea',type:'BOL'},{name:'COSCO New York',type:'BOL'},{name:'COSCO Shipping Armany',type:'C.I'},{name:'COSCO Shipping Honor',type:'BOL'},{name:'COSCO Thailand',type:'BOL'},{name:'CS Setubal',type:'BOL'},{name:'Calandra',type:'C.I'},{name:'Candido Randon',type:'C.I'},{name:'Cap San Antonio',type:'C.I'},{name:'Cap San Artemissio',type:'C.I'},{name:'Cap San Felipe',type:'C.I'},{name:'Cap San Lorenzo',type:'C.I'},{name:'Cap San Nicolas',type:'C.I'},{name:'Cap San Raphael',type:'C.I'},{name:'Cap San Sonio',type:'C.I'},{name:'Cap San maleas',type:'C.I'},{name:'Cap pionner',type:'BOL'},{name:'Cap scott',type:'C.I'},{name:'Cap sorel',type:'C.I'},{name:'Cap sounio',type:'C.I'},{name:'Cap spencer',type:'C.I'},{name:'Cap tainaro',type:'BOL'},{name:'Cardiff',type:'BOL'},{name:'Carlota Star',type:'BOL'},{name:'Carolina Star',type:'BOL'},{name:'Casa traiguem',type:'BOL'},{name:'Catherine c',type:'C.I'},{name:'Celina Star',type:'BOL'},{name:'Cgm mississippi',type:'C.I'},{name:'Chloe d',type:'BOL'},{name:'Christmas Island',type:'BOL'},{name:'Cimbria',type:'BOL'},{name:'Circular Quay',type:'C.I'},{name:'City of Alexandria',type:'BOL'},{name:'Cma cgm paraty',type:'C.I'},{name:'Cnc lion',type:'BOL'},{name:'Constantia',type:'BOL'},{name:'ContShip OAK',type:'BOL'},{name:'Conti Paris',type:'BOL'},{name:'Continuação makalu',type:'BOL'},{name:'Copiapo',type:'C.I'},{name:'Corcovado',type:'C.I'},{name:'Cosco boston',type:'BOL'},{name:'Cosco china volga',type:'C.I'},{name:'Cosco new york',type:'BOL'},{name:'Cosco prince rupert',type:'BOL'},{name:'Cosco shipping Argentina',type:'C.I'},{name:'Cosco shipping Brasil',type:'C.I'},{name:'Cosco shipping chile',type:'C.I'},{name:'Cosco shipping danube',type:'C.I'},{name:'Cosco shipping harmony',type:'BOL'},{name:'Cosco shipping honor',type:'BOL'},{name:'Cosco shipping peru',type:'C.I'},{name:'Cosco shipping rhine',type:'C.I'},{name:'Cosco shipping tian xiang he',type:'BOL'},{name:'Cosco shipping uruguai',type:'C.I'},{name:'Cosco são paulo',type:'BOL'},{name:'Cota puri',type:'C.I'},{name:'Counti Paris',type:'BOL'},{name:'Csay traiguen',type:'BOL'},{name:'Dallas express',type:'BOL'},{name:'Delphinus c',type:'BOL'},{name:'Demeter',type:'BOL'},{name:'Devotion',type:'BOL'},{name:'Diego Garcia',type:'C.I'},{name:'Dublin express',type:'BOL'},{name:'Dusseldorf express',type:'BOL'},{name:'ER Berlin',type:'BOL'},{name:'ER Tianan',type:'C.I'},{name:'EVER Steady',type:'UNDEFINED'},{name:'EVER Unific',type:'BOL'},{name:'Ensenada (material próprio)',type:'C.I'},{name:'Esl nhava sheva',type:'BOL'},{name:'Ester Island',type:'BOL'},{name:'Europe',type:'BOL'},{name:'Ever elite',type:'BOL'},{name:'Ever fame',type:'C.I'},{name:'Ever fast',type:'C.I'},{name:'Ever feat',type:'C.I'},{name:'Ever fine',type:'C.I'},{name:'Ever fit',type:'C.I'},{name:'Ever future',type:'C.I'},{name:'Ever laden',type:'C.I'},{name:'Ever liberal',type:'C.I'},{name:'Ever linkg',type:'C.I'},{name:'Ever steady',type:'BOL'},{name:'Ever unific',type:'BOL'},{name:'Ever urban',type:'BOL'},{name:'Express black sea',type:'BOL'},{name:'Fernão Dias',type:'C.I'},{name:'Fernão de Magalhães',type:'C.I'},{name:'Fort desaix',type:'C.I'},{name:'GH Leste',type:'BOL'},{name:'Galloway',type:'BOL'},{name:'Gemlik express',type:'BOL'},{name:'Gerard Schuit',type:'C.I'},{name:'Gh leste',type:'BOL'},{name:'Glasgow express',type:'BOL'},{name:'Gls rossi',type:'BOL'},{name:'Grato shang',type:'C.I'},{name:'Great shang',type:'C.I'},{name:'Great woods',type:'BOL'},{name:'Grenville',type:'C.I'},{name:'Gsl elefftheria',type:'C.I'},{name:'Gsl melina',type:'C.I'},{name:'Gsl rossi',type:'BOL'},{name:'HANSE Europe',type:'C.I'},{name:'Hanjin Seatle',type:'BOL'},{name:'Hans schulte',type:'C.I'},{name:'Haris',type:'BOL'},{name:'Harmonia Marsilia',type:'BOL'},{name:'Harmoniahusum',type:'BOL'},{name:'Harrier Hunter',type:'BOL'},{name:'Hedda Schuit',type:'BOL'},{name:'Hello',type:'BOL'},{name:'Heng hui 6',type:'BOL'},{name:'Henry Hudson',type:'BOL'},{name:'Hmm clover',type:'C.I'},{name:'Hmm privilege',type:'BOL'},{name:'Hs Carolina',type:'BOL'},{name:'Hugary',type:'BOL'},{name:'Hungary',type:'BOL'},{name:'ITAL Lunare',type:'BOL'},{name:'Irenes resolve',type:'C.I'},{name:'Irenes rule',type:'C.I'},{name:'Irenes wisdom',type:'C.I'},{name:'Ital unica',type:'BOL'},{name:'JPO Leo',type:'BOL'},{name:'JPO Scorpion',type:'BOL'},{name:'Jogela',type:'BOL'},{name:'KOTA Banteng',type:'BOL'},{name:'KOTA Cabum',type:'C.I'},{name:'KOTA Cempaka',type:'C.I'},{name:'KOTA Ganaling',type:'C.I'},{name:'KOTA Gembira',type:'BOL'},{name:'KOTA Gunawan',type:'BOL'},{name:'KOTA Lagu',type:'BOL'},{name:'KOTA Lahir',type:'BOL'},{name:'KOTA Langsar',type:'C.I'},{name:'KOTA Laris',type:'C.I'},{name:'KOTA Lawa',type:'C.I'},{name:'KOTA Layar',type:'C.I'},{name:'KOTA Lazim',type:'C.I'},{name:'KOTA Legit',type:'C.I'},{name:'KOTA Lekas',type:'C.I'},{name:'KOTA Lembah',type:'C.I'},{name:'KOTA Lestari',type:'C.I'},{name:'KOTA Lukis',type:'C.I'},{name:'KOTA Lumaian',type:'C.I'},{name:'KOTA Machan',type:'C.I'},{name:'KOTA Manais',type:'BOL'},{name:'KOTA Megah',type:'C.I'},{name:'KOTA Pusaka',type:'C.I'},{name:'Kota cabar',type:'C.I'},{name:'Kota cantik',type:'C.I'},{name:'Kota carum',type:'C.I'},{name:'Kota cempaka',type:'C.I'},{name:'Kota cepat',type:'C.I'},{name:'Kota ebony',type:'C.I'},{name:'Kota embun',type:'C.I'},{name:'Kota gadang',type:'C.I'},{name:'Kota karim',type:'BOL'},{name:'Kota lavana',type:'C.I'},{name:'Kota layang',type:'C.I'},{name:'Kota lekas',type:'C.I'},{name:'Kota lestari',type:'C.I'},{name:'Kota lima',type:'BOL'},{name:'Kota lumba',type:'C.I'},{name:'Kota megah',type:'C.I'},{name:'Kota pahlawan',type:'C.I'},{name:'Kota pelangi',type:'C.I'},{name:'Kota puri',type:'C.I'},{name:'Kota pusaka',type:'C.I'},{name:'Kota santos',type:'BOL'},{name:'Kure',type:'BOL'},{name:'LOG IN Discovery',type:'BOL'},{name:'LOG IN Endurance',type:'BOL'},{name:'LOG IN Jacaranda',type:'C.I'},{name:'LOG IN Pantanal',type:'BOL'},{name:'LOG IN Resiliente',type:'BOL'},{name:'LONDON Trader',type:'BOL'},{name:'Lilly Schut',type:'BOL'},{name:'Lodur',type:'BOL'},{name:'Log in Beach express',type:'BOL'},{name:'Log in Discovery',type:'BOL'},{name:'Log in endurance',type:'BOL'},{name:'Log in evolution',type:'C.I'},{name:'Log in experience',type:'C.I'},{name:'Log in jacaranda',type:'C.I'},{name:'Log in jatoba',type:'C.I'},{name:'Log in pantanal',type:'BOL'},{name:'Log in polaris',type:'C.I'},{name:'Log in resiliente',type:'BOL'},{name:'Loncomilla',type:'BOL'},{name:'London trader',type:'BOL'},{name:'Long beach express',type:'BOL'},{name:'Lori',type:'BOL'},{name:'Louis',type:'BOL'},{name:'Lovis S',type:'BOL'},{name:'Lutetia',type:'BOL'},{name:'MAERSK Bermuda',type:'BOL'},{name:'MAERSK La Paz',type:'BOL'},{name:'MAERSK Laguna',type:'BOL'},{name:'MAERSK Leon',type:'BOL'},{name:'MAERSK Leticia',type:'BOL'},{name:'MAERSK Londrina',type:'BOL'},{name:'MAERSK Menphis',type:'BOL'},{name:'MAERSK Shams',type:'BOL'},{name:'MAERSK Shivling',type:'BOL'},{name:'MERCOSUL Guarani',type:'BOL'},{name:'MERCOSUL Manaus',type:'BOL'},{name:'MINERVA',type:'C.I'},{name:'MOL Paramount',type:'BOL'},{name:'MONGOOSE Hunter',type:'C.I'},{name:'MONTE Aconcagua',type:'C.I'},{name:'MONTE Azul',type:'C.I'},{name:'MONTE Cervantes',type:'C.I'},{name:'MONTE Olivia',type:'C.I'},{name:'MONTE Pascoal',type:'C.I'},{name:'MONTE Rosa',type:'C.I'},{name:'MONTE Sarmiento',type:'C.I'},{name:'MONTE Tamaro',type:'C.I'},{name:'MONTE VIDEO EXPRESS',type:'C.I'},{name:'MONTE Verde',type:'C.I'},{name:'MSC Jasmine x',type:'BOL'},{name:'MSC Adonis',type:'C.I'},{name:'MSC Africa',type:'UNDEFINED'},{name:'MSC Agadir',type:'BOL'},{name:'MSC Agrigento',type:'BOL'},{name:'MSC Albany',type:'BOL'},{name:'MSC Amalfi',type:'BOL'},{name:'MSC Arica',type:'BOL'},{name:'MSC Athens',type:'BOL'},{name:'MSC Athos',type:'BOL'},{name:'MSC Bianca',type:'BOL'},{name:'MSC Branka',type:'BOL'},{name:'MSC Carlotta',type:'BOL'},{name:'MSC Carole',type:'BOL'},{name:'MSC Channe',type:'BOL'},{name:'MSC Clea',type:'BOL'},{name:'MSC Dakar x',type:'BOL'},{name:'MSC Damla',type:'BOL'},{name:'MSC Denisse x',type:'BOL'},{name:'MSC Domitille',type:'BOL'},{name:'MSC Dubai',type:'BOL'},{name:'MSC Gayane',type:'BOL'},{name:'MSC Ghana',type:'BOL'},{name:'MSC Giselle',type:'BOL'},{name:'MSC INSA',type:'BOL'},{name:'MSC Ilenia',type:'BOL'},{name:'MSC Ilona',type:'BOL'},{name:'MSC Kalamata VII',type:'BOL'},{name:'MSC Lagos x',type:'BOL'},{name:'MSC Le Havre',type:'BOL'},{name:'MSC Leila',type:'BOL'},{name:'MSC Loretta',type:'BOL'},{name:'MSC Margarita',type:'BOL'},{name:'MSC Marítima v',type:'BOL'},{name:'MSC Nairobe',type:'BOL'},{name:'MSC Orion',type:'BOL'},{name:'MSC Pegasus VII',type:'BOL'},{name:'MSC Quingdao',type:'BOL'},{name:'MSC Ronit',type:'BOL'},{name:'MSC Sara Elena',type:'BOL'},{name:'MSC Shay',type:'BOL'},{name:'MSC Shreya',type:'BOL'},{name:'MSC Silvia',type:'BOL'},{name:'MSC Siya b',type:'C.I'},{name:'MSC Spain',type:'BOL'},{name:'MSC Togo',type:'BOL'},{name:'MSC Vilda x',type:'BOL'},{name:'MSC anzu',type:'BOL'},{name:'MSC bianca',type:'BOL'},{name:'MSC eliana',type:'BOL'},{name:'MSC firenze',type:'BOL'},{name:'MSC gabriella',type:'BOL'},{name:'MSC hortense',type:'BOL'},{name:'MSC lily',type:'BOL'},{name:'MSC los angeles',type:'BOL'},{name:'MSC meline',type:'BOL'},{name:'MSC michela',type:'BOL'},{name:'MSC muge',type:'BOL'},{name:'MSC pina',type:'BOL'},{name:'MSC yashi b',type:'BOL'},{name:'Madrid trader',type:'BOL'},{name:'Maersk Acadia',type:'C.I'},{name:'Maersk Everglades',type:'C.I'},{name:'Maersk Fortaleza',type:'C.I'},{name:'Maersk Freeport',type:'C.I'},{name:'Maersk Londrina',type:'BOL'},{name:'Maersk Rubicon',type:'BOL'},{name:'Maersk Wellington',type:'C.I'},{name:'Maersk amazon',type:'BOL'},{name:'Maersk avon',type:'BOL'},{name:'Maersk bentonville',type:'BOL'},{name:'Maersk bermuda',type:'BOL'},{name:'Maersk biscayne',type:'C.I'},{name:'Maersk el palomar',type:'BOL'},{name:'Maersk ganges',type:'BOL'},{name:'Maersk inoshima',type:'BOL'},{name:'Maersk jalan',type:'BOL'},{name:'Maersk karachi',type:'BOL'},{name:'Maersk la paz',type:'BOL'},{name:'Maersk laberinto',type:'BOL'},{name:'Maersk labrea',type:'BOL'},{name:'Maersk laguna',type:'BOL'},{name:'Maersk lamanai',type:'BOL'},{name:'Maersk lanco',type:'BOL'},{name:'Maersk lavras',type:'BOL'},{name:'Maersk lebu',type:'BOL'},{name:'Maersk leon',type:'BOL'},{name:'Maersk leticia',type:'BOL'},{name:'Maersk lima',type:'BOL'},{name:'Maersk lins',type:'BOL'},{name:'Maersk lirquen',type:'BOL'},{name:'Maersk lota',type:'BOL'},{name:'Maersk luz',type:'BOL'},{name:'Maersk marajo',type:'BOL'},{name:'Maersk memphis',type:'BOL'},{name:'Maersk monte linzor',type:'C.I'},{name:'Maersk newark',type:'BOL'},{name:'Maersk palomar',type:'BOL'},{name:'Maersk polar',type:'BOL'},{name:'Maersk redwood',type:'C.I'},{name:'Maersk sana',type:'BOL'},{name:'Maersk santana',type:'BOL'},{name:'Maersk taipur',type:'BOL'},{name:'Maipo',type:'BOL'},{name:'Maliakos',type:'C.I'},{name:'Mapocho',type:'BOL'},{name:'Maria h',type:'BOL'},{name:'Maya bay',type:'BOL'},{name:'Mediterranean express',type:'BOL'},{name:'Mehuin',type:'BOL'},{name:'Melbourne bridege',type:'BOL'},{name:'Mercosul Guarujá',type:'BOL'},{name:'Mercosul Santos',type:'BOL'},{name:'Mercosul fortaleza',type:'BOL'},{name:'Mercosul guarani',type:'BOL'},{name:'Mercosul suape',type:'BOL'},{name:'Meridian',type:'C.I'},{name:'Mirador express',type:'BOL'},{name:'Mizar',type:'BOL'},{name:'Mona lisa',type:'BOL'},{name:'Monte Alegre',type:'C.I'},{name:'Monte Verde',type:'C.I'},{name:'Monte azul',type:'C.I'},{name:'Monte cervantes',type:'C.I'},{name:'Monte olivia',type:'C.I'},{name:'Monte sarmiento',type:'C.I'},{name:'Monte tamaro',type:'C.I'},{name:'Montevideo express',type:'C.I'},{name:'Msc Pegasus VII',type:'BOL'},{name:'Myd tianjin',type:'BOL'},{name:'NAVIOS Spring',type:'BOL'},{name:'NILEDUTCH Antwerpen',type:'C.I'},{name:'NILEDUTCH Breda',type:'C.I'},{name:'NILEDUTCH Luanda',type:'BOL'},{name:'NORDIC Beijing',type:'C.I'},{name:'NORDIC Hong Kong',type:'C.I'},{name:'NORDIC Macal',type:'BOL'},{name:'NORDIC Pacific',type:'BOL'},{name:'NORDIC Straglund',type:'BOL'},{name:'NORTHERN Delegation',type:'BOL'},{name:'NORTHERN Guard',type:'BOL'},{name:'NORTHERN Magnetic',type:'BOL'},{name:'NORTHERN Magnitude',type:'BOL'},{name:'NORTHERN Magnum',type:'BOL'},{name:'NYK Diana',type:'C.I'},{name:'Nairobix',type:'BOL'},{name:'Natal',type:'BOL'},{name:'Navarino',type:'BOL'},{name:'Navios domino',type:'BOL'},{name:'Navios maguinolia',type:'C.I'},{name:'Navios springs',type:'BOL'},{name:'Navios vermilion',type:'BOL'},{name:'Nc bravo',type:'C.I'},{name:'Nc breda',type:'C.I'},{name:'Nc brisa',type:'C.I'},{name:'Nordamélia',type:'BOL'},{name:'Northern democrat',type:'BOL'},{name:'Northern jubilee',type:'BOL'},{name:'Northern magnitude',type:'BOL'},{name:'Northern magnun',type:'BOL'},{name:'Northern majestic',type:'BOL'},{name:'Northern priority',type:'BOL'},{name:'Nyk demeter',type:'BOL'},{name:'Nyk diana',type:'C.I'},{name:'Nz Changai',type:'BOL'},{name:'One amazon',type:'C.I'},{name:'One panama',type:'C.I'},{name:'PARADISE Star',type:'BOL'},{name:'POLAR Argentina',type:'BOL'},{name:'POLAR Costa Rica',type:'C.I'},{name:'Palena',type:'C.I'},{name:'Pandora',type:'BOL'},{name:'Paradise star',type:'BOL'},{name:'Paranagua express',type:'C.I'},{name:'Paul Russ',type:'BOL'},{name:'Pedro Alvares Cabral',type:'C.I'},{name:'Polar argentina',type:'BOL'},{name:'Polar chile',type:'BOL'},{name:'Polonia',type:'BOL'},{name:'President lb Johnson',type:'C.I'},{name:'Prestige',type:'BOL'},{name:'Progress c',type:'BOL'},{name:'RIO Barrow',type:'BOL'},{name:'RIO Centaurus',type:'BOL'},{name:'Rdo fortune',type:'BOL'},{name:'Robin 4',type:'BOL'},{name:'SAFA Marine',type:'BOL'},{name:'SAFADI',type:'BOL'},{name:'SAFMARINE Mafadi',type:'BOL'},{name:'SEA LAND Michigan',type:'BOL'},{name:'SEAMAX Rowaytion',type:'C.I'},{name:'SEAMAX Stanford',type:'BOL'},{name:'SEASPAN Dubai',type:'BOL'},{name:'SEASPAN Raptor',type:'C.I'},{name:'SM Hong Kong',type:'BOL'},{name:'Saga faith',type:'C.I'},{name:'Salvador express',type:'C.I'},{name:'San Alberto',type:'C.I'},{name:'San Alvaro',type:'C.I'},{name:'San Amerigo',type:'C.I'},{name:'San Antonio EXPRESS',type:'C.I'},{name:'San Felipe',type:'BOL'},{name:'San Fernando',type:'BOL'},{name:'San Fracisco',type:'BOL'},{name:'San Francisca',type:'BOL'},{name:'San Nicolas maersk',type:'C.I'},{name:'San Raphael maersk',type:'C.I'},{name:'San Vicente',type:'C.I'},{name:'San Vicente Express',type:'C.I'},{name:'San alberto',type:'C.I'},{name:'San antonio express',type:'C.I'},{name:'San felipe',type:'BOL'},{name:'San francisca',type:'BOL'},{name:'San marcos maersk',type:'C.I'},{name:'San nicolas maersk',type:'C.I'},{name:'Santa Linea',type:'C.I'},{name:'Santa barbara',type:'C.I'},{name:'Santa inês',type:'C.I'},{name:'Santos EXPRESS',type:'BOL'},{name:'Sealand michigan',type:'BOL'},{name:'Seamax empire',type:'BOL'},{name:'Seamax rowayton',type:'C.I'},{name:'Seamax stamford',type:'BOL'},{name:'Seaspan empire',type:'BOL'},{name:'Seaspan fuzhou',type:'BOL'},{name:'Seaspan hamburg',type:'BOL'},{name:'Seaspan hnnover',type:'BOL'},{name:'Seaspan osprey',type:'C.I'},{name:'Seaspan raptor',type:'C.I'},{name:'Seaspan santos',type:'BOL'},{name:'Seatlle c',type:'BOL'},{name:'Sebastião Caboto',type:'C.I'},{name:'Skyros',type:'BOL'},{name:'Solar N',type:'BOL'},{name:'Skyros',type:'BOL'},{name:'Spirit of Hong kong',type:'BOL'},{name:'Spirit of Sydney',type:'C.I'},{name:'Spyros V',type:'BOL'},{name:'Stralsund',type:'BOL'},{name:'Suape express',type:'BOL'},{name:'Sunny phoenix',type:'BOL'},{name:'Swansea',type:'BOL'},{name:'TRF Partici',type:'BOL'},{name:'Tabea',type:'BOL'},{name:'Taipei trade',type:'BOL'},{name:'Tampanos',type:'BOL'},{name:'Tasman',type:'BOL'},{name:'Teno',type:'BOL'},{name:'Tian jian',type:'C.I'},{name:'Tican fu',type:'C.I'},{name:'Tirua',type:'BOL'},{name:'Tirva',type:'BOL'},{name:'Tokyo bay',type:'BOL'},{name:'Torrente',type:'BOL'},{name:'Tower',type:'BOL'},{name:'Trf partici',type:'BOL'},{name:'Tucapel',type:'BOL'},{name:'Tusul',type:'BOL'},{name:'UASC Zamzam',type:'C.I'},{name:'Uasc al khor',type:'BOL'},{name:'Uasc zamzam',type:'C.I'},{name:'Ute',type:'BOL'},{name:'Valence',type:'BOL'},{name:'Valiant',type:'BOL'},{name:'Valor',type:'BOL'},{name:'Value',type:'BOL'},{name:'Vanetiko',type:'BOL'},{name:'Vantage',type:'BOL'},{name:'Varamo',type:'BOL'},{name:'Velika',type:'BOL'},{name:'Venetiko',type:'BOL'},{name:'Venezia',type:'BOL'},{name:'Vicente Pizon',type:'C.I'},{name:'Virgo',type:'C.I'},{name:'W kyrenia',type:'BOL'},{name:'Wangarata',type:'BOL'},{name:'Wieland',type:'BOL'},{name:'XIN Chi Wan',type:'UNDEFINED'},{name:'XIN Su Zhou',type:'BOL'},{name:'XIN Wu Han',type:'BOL'},{name:'Xin chang sha',type:'BOL'},{name:'Xin chi wan',type:'BOL'},{name:'Xin chong qing',type:'BOL'},{name:'Xin fu zhou',type:'BOL'},{name:'Xin su zhou',type:'BOL'},{name:'Xin wei hai',type:'BOL'},{name:'Yigitcan',type:'BOL'},{name:'Ym capacity',type:'C.I'},{name:'Ym centennial',type:'C.I'},{name:'Ym continent',type:'C.I'},{name:'ZIM Chicago',type:'BOL'},{name:'ZIM Los Angeles',type:'BOL'},{name:'ZIM San Diego',type:'BOL'},{name:'Zhong Yan hai Yun jin qe',type:'C.I'},{name:'Zim Thailand',type:'C.I'},{name:'Zim baltimore',type:'BOL'},{name:'Zim nofolk',type:'BOL'},{name:'Zim usa',type:'C.I'},{name:'Zim xiamen',type:'BOL'},{name:'irenes resolve',type:'C.I'},{name:'irenes rule',type:'C.I'},{name:'irenes wisdom',type:'C.I'},{name:'joão de Solis',type:'BOL'},{name:'nc bruma',type:'C.I'},{name:'rdo Fortune',type:'BOL'},{name:'san amerigo',type:'C.I'}
+    ];
 
-    function init() {
-      const savedShips = localStorage.getItem('ships_data');
-      if (savedShips) {
-        allShips = JSON.parse(savedShips);
-      }
-      render(allShips);
-    }
-
-    function render(ships) {
-      const results = document.getElementById('results');
-      const count = document.getElementById('count');
-      results.innerHTML = '';
-      
-      if (ships.length === 0) {
-        results.innerHTML = '<div class="no-results">Nenhum navio encontrado.</div>';
-        count.innerText = 'Total: 0 navios';
-        return;
-      }
-
-      ships.forEach((ship, index) => {
+    function render(list) {
+      const res = document.getElementById('results');
+      res.innerHTML = '';
+      list.forEach((s, idx) => {
         const card = document.createElement('div');
-        card.className = `ship-card ${ship.type.toLowerCase().replace('.', '')}`;
-        card.innerHTML = `
-          <div class="ship-name">${ship.name}</div>
-          <div class="ship-type">
-            <span class="badge ${ship.type.toLowerCase().replace('.', '')}">${ship.type}</span>
-            <button class="edit-btn ${isAdmin ? 'admin-visible' : ''}" onclick="openEdit(${index})">✏️</button>
+        card.className = 'ship-card';
+        card.innerHTML = \`
+          <div>
+            <strong>\${s.name}</strong>
+            <span class="badge \${s.type.toLowerCase().replace('.','')}">\${s.type}</span>
           </div>
-        `;
-        results.appendChild(card);
+          <button class="edit-btn" onclick="openEdit(\${idx})">✏️</button>
+        \`;
+        res.appendChild(card);
       });
-      
-      count.innerText = \`Total: \${ships.length} navios\`;
     }
 
-    document.getElementById('search').addEventListener('input', (e) => {
-      const term = e.target.value.toLowerCase();
-      const filtered = allShips.filter(s => s.name.toLowerCase().includes(term));
-      render(filtered);
-    });
+    document.getElementById('search').oninput = (e) => {
+      const t = e.target.value.toLowerCase();
+      render(ships.filter(s => s.name.toLowerCase().includes(t)));
+    };
 
-    document.getElementById('adminBtn').addEventListener('click', () => {
-      if (isAdmin) {
+    document.getElementById('adminBtn').onclick = () => {
+      if(isAdmin) {
         isAdmin = false;
-        document.getElementById('adminBtn').innerText = '🔐 Modo Admin';
+        document.body.classList.remove('admin-active');
         document.getElementById('adminNotice').style.display = 'none';
-        render(allShips);
       } else {
         document.getElementById('modal').style.display = 'flex';
       }
-    });
-
-    document.getElementById('loginBtn').addEventListener('click', () => {
-      const pass = document.getElementById('passwordInput').value;
-      if (pass === ADMIN_PASSWORD) {
-        isAdmin = true;
-        document.getElementById('adminBtn').innerText = '🔓 Sair Admin';
-        document.getElementById('adminNotice').style.display = 'block';
-        document.getElementById('modal').style.display = 'none';
-        document.getElementById('passwordInput').value = '';
-        render(allShips);
-      } else {
-        alert('Senha incorreta!');
-      }
-    });
-
-    document.getElementById('cancelBtn').addEventListener('click', () => {
-      document.getElementById('modal').style.display = 'none';
-      document.getElementById('passwordInput').value = '';
-    });
-
-    let editingIndex = -1;
-
-    window.openEdit = (index) => {
-      editingIndex = index;
-      const ship = allShips[index];
-      document.getElementById('editShipName').innerText = ship.name;
-      document.getElementById('typeSelect').value = ship.type;
-      document.getElementById('editModal').style.display = 'flex';
     };
 
-    document.getElementById('saveEditBtn').addEventListener('click', () => {
-      const newType = document.getElementById('typeSelect').value;
-      allShips[editingIndex].type = newType;
-      localStorage.setItem('ships_data', JSON.stringify(allShips));
-      document.getElementById('editModal').style.display = 'none';
-      render(allShips);
-    });
+    function login() {
+      if(document.getElementById('pass').value === '1234') {
+        isAdmin = true;
+        document.body.classList.add('admin-active');
+        document.getElementById('adminNotice').style.display = 'block';
+        closeModal();
+      } else { alert('Erro'); }
+    }
 
-    document.getElementById('closeEditBtn').addEventListener('click', () => {
-      document.getElementById('editModal').style.display = 'none';
-    });
+    function closeModal() { document.getElementById('modal').style.display = 'none'; document.getElementById('pass').value = ''; }
 
+    let editIdx = -1;
+    function openEdit(idx) {
+      editIdx = idx;
+      document.getElementById('editName').innerText = ships[idx].name;
+      document.getElementById('editType').value = ships[idx].type;
+      document.getElementById('editModal').style.display = 'flex';
+    }
+
+    function saveEdit() {
+      ships[editIdx].type = document.getElementById('editType').value;
+      localStorage.setItem('ships_data', JSON.stringify(ships));
+      closeEdit();
+      render(ships);
+    }
+
+    function closeEdit() { document.getElementById('editModal').style.display = 'none'; }
+
+    function init() {
+      const saved = localStorage.getItem('ships_data');
+      if(saved) ships = JSON.parse(saved);
+      render(ships);
+    }
     init();
   </script>
 </body>
