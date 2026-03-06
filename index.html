@@ -13,9 +13,11 @@
         .controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
         #search { flex: 1; padding: 15px; font-size: 16px; border: 2px solid #ddd; border-radius: 8px; outline: none; transition: border 0.3s; }
         #search:focus { border-color: #667eea; }
-        #adminBtn { padding: 12px 20px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; transition: opacity 0.3s; }
-        #adminBtn:hover { opacity: 0.8; }
-        #adminNotice { display: none; background: #d4edda; color: #155724; padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #28a745; font-weight: bold; }
+        #adminBtn, #addShipBtn { padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; transition: opacity 0.3s; font-weight: bold; }
+        #adminBtn { background: #007bff; color: white; }
+        #addShipBtn { background: #28a745; color: white; display: none; }
+        #adminBtn:hover, #addShipBtn:hover { opacity: 0.8; }
+        #adminNotice { display: none; background: #d4edda; color: #155724; padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #28a745; font-weight: bold; text-align: center; }
         .ships-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; }
         .ship-card { background: #f8f9fa; padding: 15px; border-radius: 10px; border-left: 4px solid #dee2e6; display: flex; justify-content: space-between; align-items: center; transition: transform 0.2s; }
         .ship-card:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
@@ -25,7 +27,8 @@
         .undefined { background: #6c757d; }
         #modal, #editModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         .modal-content { background: white; padding: 30px; border-radius: 15px; width: 95%; max-width: 400px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-        .modal-content h2 { margin-bottom: 20px; color: #333; text-align: center; }
+        .modal-content h2 { margin-bottom: 20px; color: #333; text-align: center; font-size: 1.5em; }
+        .modal-content label { display: block; margin-bottom: 5px; font-size: 0.8em; color: #666; font-weight: bold; }
         .modal-content input, .modal-content select { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #eee; border-radius: 8px; font-size: 16px; }
         .modal-content button { width: 100%; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 8px; transition: background 0.3s; }
         .btn-primary { background: #007bff; color: white; }
@@ -40,10 +43,11 @@
 <body>
     <div class="container">
         <h1>Tipos de Castanha dos Navios</h1>
-        <p id="subtitle">Consulta rápida: BOL (bolinha vermelha), C.I (inteligente), UNDEFINED (desconhecido)</p>
+        <p id="subtitle">Consulta rápida: BOL (bolinha), C.I (inteligente), UNDEFINED (desconhecido)</p>
         <div id="adminNotice">MODO ADMIN ATIVO</div>
         <div class="controls">
             <input type="text" id="search" placeholder="Pesquisar navio por nome..." autocomplete="off">
+            <button id="addShipBtn" onclick="openAdd()">+ Novo Navio</button>
             <button id="adminBtn">🔒 Modo Admin</button>
         </div>
         <div id="results" class="ships-grid"></div>
@@ -59,16 +63,19 @@
         </div>
     </div>
 
-    <!-- Edit Modal -->
+    <!-- Edit/Add Modal -->
     <div id="editModal">
         <div class="modal-content">
-            <h2 id="editName"></h2>
+            <h2 id="modalTitle">Editar Navio</h2>
+            <label>Nome do Navio</label>
+            <input type="text" id="editNameInput" placeholder="Ex: CGM CORNEILLE">
+            <label>Tipo de Castanha</label>
             <select id="editType">
                 <option value="BOL">BOL</option>
                 <option value="C.I">C.I</option>
                 <option value="UNDEFINED">UNDEFINED</option>
             </select>
-            <button class="btn-primary" onclick="saveEdit()">Salvar Alteração</button>
+            <button class="btn-primary" onclick="saveEdit()">Salvar</button>
             <button class="btn-secondary" onclick="closeEdit()">Cancelar</button>
         </div>
     </div>
@@ -83,6 +90,7 @@
             const res = document.getElementById('results');
             res.innerHTML = '';
             list.forEach((s, idx) => {
+                const originalIdx = ships.indexOf(s);
                 const card = document.createElement('div');
                 card.className = 'ship-card';
                 card.innerHTML = `
@@ -90,7 +98,7 @@
                         <strong>${s.name}</strong>
                         <span class="badge ${s.type.toLowerCase().replace('.','')}">${s.type}</span>
                     </div>
-                    <button class="edit-btn" onclick="openEdit(${idx})">✏️</button>
+                    <button class="edit-btn" onclick="openEdit(${originalIdx})">✏️</button>
                 `;
                 res.appendChild(card);
             });
@@ -107,6 +115,7 @@
                 isAdmin = false;
                 document.body.classList.remove('admin-active');
                 document.getElementById('adminNotice').style.display = 'none';
+                document.getElementById('addShipBtn').style.display = 'none';
                 document.getElementById('adminBtn').innerText = '🔒 Modo Admin';
             } else {
                 document.getElementById('modal').style.display = 'flex';
@@ -118,6 +127,7 @@
                 isAdmin = true;
                 document.body.classList.add('admin-active');
                 document.getElementById('adminNotice').style.display = 'block';
+                document.getElementById('addShipBtn').style.display = 'inline-block';
                 document.getElementById('adminBtn').innerText = '🔓 Sair Admin';
                 closeModal();
             } else {
@@ -131,15 +141,35 @@
         }
 
         let editIdx = -1;
+
+        function openAdd() {
+            editIdx = -1;
+            document.getElementById('modalTitle').innerText = 'Adicionar Novo Navio';
+            document.getElementById('editNameInput').value = '';
+            document.getElementById('editType').value = 'BOL';
+            document.getElementById('editModal').style.display = 'flex';
+        }
+
         function openEdit(idx) {
             editIdx = idx;
-            document.getElementById('editName').innerText = ships[idx].name;
+            document.getElementById('modalTitle').innerText = 'Editar Navio';
+            document.getElementById('editNameInput').value = ships[idx].name;
             document.getElementById('editType').value = ships[idx].type;
             document.getElementById('editModal').style.display = 'flex';
         }
 
         function saveEdit() {
-            ships[editIdx].type = document.getElementById('editType').value;
+            const name = document.getElementById('editNameInput').value.trim();
+            const type = document.getElementById('editType').value;
+            
+            if(!name) return alert('O nome do navio é obrigatório!');
+
+            if(editIdx === -1) {
+                ships.push({ name, type });
+            } else {
+                ships[editIdx] = { name, type };
+            }
+            
             localStorage.setItem('ships_data', JSON.stringify(ships));
             closeEdit();
             render(ships);
