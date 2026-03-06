@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ship List 2.0 - Tipos de Castanha</title>
+    <title>🎨 CastanhaCheck - Tipos de Castanha</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
@@ -49,7 +49,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Ship List 2.0</h1>
+        <h1>🎨 CastanhaCheck</h1>
         <p id="subtitle">Consulta de Castanhas: BOL, C.I, UNDEFINED</p>
         <div id="adminNotice">MODO ADMIN ATIVO</div>
         <div class="stats">
@@ -248,7 +248,7 @@
             const name = document.getElementById('suggestName').value;
             const detail = document.getElementById('suggestDetail').value;
             if(!name || !detail) return alert('Por favor, preencha o nome do navio e o detalhe da sugestão.');
-            const subject = encodeURIComponent('Sugestão de Atualização - Ship List 2.0');
+            const subject = encodeURIComponent('Sugestão de Atualização - 🎨 CastanhaCheck');
             const body = encodeURIComponent(`Olá Admin,\n\nSugestão para o navio: ${name}\nDetalhes: ${detail}\n\nEnviado via App Ship List.`);
             window.location.href = `mailto:wmdias1984@gmail.com?subject=${subject}&body=${body}`;
             closeSuggest();
